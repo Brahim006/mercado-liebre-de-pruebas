@@ -2,10 +2,12 @@
 const express = require('express');
 const router = express.Router();
 const multer = require("multer");
-const productsTrimmerMiddleware = require("../middleWares/productsDataTrimmer");
 const productsDataValidator = require("../validators/productsValidator");
-
+const dataTrimmer = require("../middleWares/dataTrimmer");
 const diskStorage = require("../utils/diskStorage");
+
+// Middleware para trimmear la info de productos
+const productsDataTrimmer = dataTrimmer("name", "price", "discount", "description");
 // Middleware para la subida de archivos
 const upload = multer({ storage : diskStorage("products") });
 
@@ -20,7 +22,7 @@ router.get('/create', productsController.create);
 
 router.post('/create',
             upload.any(),
-            productsTrimmerMiddleware,
+            productsDataTrimmer,
             productsDataValidator,
             productsController.store);
 
@@ -32,7 +34,7 @@ router.get('/:id/edit', productsController.edit);
 
 router.put('/:id/edit', 
             upload.any(),
-            productsTrimmerMiddleware, 
+            productsDataTrimmer, 
             productsDataValidator,
             productsController.update);
 
