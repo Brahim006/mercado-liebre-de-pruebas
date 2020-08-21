@@ -1,7 +1,7 @@
+/**
+ * Validator para el formulario de creación/edición de productos,
+ */
 const { check } = require("express-validator");
-
-let validExt = [];
-let validMIME = [];
 
 module.exports = [
 
