@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Include Head -->
+<%- include('../partials/head', {title: 'Registrarse'}) %>
+<body>
+    <!-- Header -->
+	<%- include('../partials/headerNavbar') %>
+	<!-- /Header -->
+    
+    <div class="main-container"><!-- Contenedor de la sección principal -->
+
+        <main>
+
+            <form action="/users/register" method="POST"> <!-- Formulario de registro -->
+
+                <input type="text" name="name" id="name" required 
+                    placeholder="Nombre(s)" class="textField">
+                <input type="text" name="lastName" id="lastName" required
+                    placeholder="Apellido(s)" class="textField">
+                <input type="text" name="userName" id="userName" required
+                       placeholder="Nombre de usuario" class="textField">
+                <input type="email" name="email" id="email" placeholder="E-mail" required
+                       class="textField">
+    
+                <label for="birthDate">Fecha de nacimiento:</label>
+                <input type="date" name="birthDate" id="birthDate" class="textField" required>
+    
+                <input type="text" name="address" id="address" placeholder="Domicilio"
+                class="textField">
+    
+                <label for="userProfile" class="sectionLabel">Perfil de usuario</label>
+                <div class="radio-container">
+                    <input type="radio" name="userProfile" value="1" checked>
+                    <span>Vendedor</span>
+                    <input type="radio" name="userProfile" value="2">
+                    <span>Comprador</span>
+                </div>
+
+                <label for="interests" class="sectionLabel">Intereses</label>
+                <div class="checkbox-container">
+                    <input type="checkbox" name="interests" value="1">
+                    <span class="chackbox-label">Electro</span>
+                    <input type="checkbox" name="interests" value="2">
+                    <span class="chackbox-label">Moda</span>
+                    <input type="checkbox" name="interests" value="3">
+                    <span class="chackbox-label">Hogar</span>
+                    <input type="checkbox" name="interests" value="4">
+                    <span class="chackbox-label">Juguetería</span>
+                    <input type="checkbox" name="interests" value="5">
+                    <span class="chackbox-label">Vida sana</span>
+                </div>
+    
+                <label for="profilePhoto" class="sectionLabel">Elegí tu foto de usuario</label>
+                <input type="file" name="profilePhoto" required>
+    
+                <input type="password" name="password" id="password" placeholder="Contraseña"
+                       class="textField" required>
+                <input type="password" name="confirmPassword" id="confirmPassword" 
+                       placeholder="Confirmar contraseña" class="textField" required>
+    
+                <button type="submit" class="submitButton">Enviar</button>
+                <button type="reset" class="resetButton">Borrar</button>
+    
+            </form><!-- Fin formulario de registro -->
+            
+        </main>    
+
+    </div>
+
+    <!-- footer -->
+	<%- include('../partials/footer') %>
+	<!-- /footer -->
+</body>
+</html>

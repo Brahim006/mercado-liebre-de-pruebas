@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Test 1",
+        "price": "1000",
+        "discount": "15",
+        "category": "in-sale",
+        "description": "Test 1",
+        "images": [],
+        "id": 1
+    },
+    {
+        "name": "Test 2",
+        "price": "1050",
+        "discount": "0",
+        "category": "visited",
+        "description": "Test 2",
+        "images": [],
+        "id": 2
+    }
+]

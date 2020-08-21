@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Include Head -->
+<%- include('../partials/head', {title: 'Registrarse'}) %>
+<body>
+    <!-- Header -->
+	<%- include('../partials/headerNavbar') %>
+    <!-- /Header -->
+    
+    <div class="main-container">
+
+        <main>
+
+            <form action="/users/login" method="POST"> <!-- Formulario de ingreso -->
+
+                <input type="text" name="userName" id="userName" placeholder="Nombre de Usuario"
+                       class="textField">
+                <input type="password" name="password" id="password" placeholder="Contraseña"
+                       class="textField">
+                <label for="rememberMe">Recordarme</label>
+                <input type="checkbox" name="rememberMe" value="rememberMe">
+                <button type="submit" class="submitButton">Ingresar</button>
+    
+            </form>
+
+        </main>
+
+    </div>
+
+    <!-- footer -->
+	<%- include('../partials/footer') %>
+	<!-- /footer -->
+</body>
+</html>

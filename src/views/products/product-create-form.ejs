@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Include Head -->
+<%- include('../partials/head', {title: 'Formulario de creación'}) %>
+<body>
+	<!-- Header -->
+	<%- include('../partials/headerNavbar') %>
+	<!-- /Header -->
+
+	<div class="container products-wrapper">
+		<div class="row">
+			<div class="col-12">
+				<h2 class="products-title">Formulario de creación de productos</h2>
+			</div>
+		</div>
+		<div class="col-12">
+			<form action="/products/create" method="POST" enctype="multipart/form-data">
+				<div class="row product-detail">
+					<div class="col-12 col-md-6">
+						<label for="name" class="form-label">Nombre del producto:</label>
+						<input type="text" id="name" name="name" placeholder="Ej: Zapatillas Reebok" required
+							class="form-input <%= locals.errors && errors.name ? 'alert-input' : '' %>"
+							value="<%= locals.product && product.name ? product.name : '' %>">
+						<span class="alert-label">
+							<%= locals.errors && errors.name ? errors.name.msg : '' %>
+						</span>
+					</div>
+					<div class="col-12 col-md-6">
+						<label for="price" class="form-label">Precio del producto:</label>
+						<input type="text" id="price" name="price" placeholder="Ej: 5678" required
+							class="form-input <%= locals.errors && errors.price ? 'alert-input' : '' %>"
+							value="<%= locals.product && product.price ? product.price : '' %>">
+						<span class="alert-label">
+							<%= locals.errors && errors.price ? errors.price.msg : '' %>
+						</span>
+					</div>
+					<div class="col-12 col-md-6">
+						<label for="discount" class="form-label">Descuento:</label>
+						<input type="text" id="discount" name="discount" placeholder="Ej: 15" required
+							class="form-input <%= locals.errors && errors.discount ? 'alert-input' : '' %>"
+							value="<%= locals.product && product.discount ? product.discount : '' %>">
+						<span class="alert-label">
+							<%= locals.errors && errors.discount ? errors.discount.msg : '' %>
+						</span>
+					</div>
+					<div class="col-12 col-md-6">
+						<label for="category" class="form-label">Categoría:</label>
+						<select name="category" id="category" class="form-input <%= locals.errors && errors.category ? 'alert-input' : '' %>">
+							<!-- TODO: validar -->
+							<option value="" <%= locals.product && product.category == '' ? 'selected' : ''%> >
+								Elegí
+							</option>
+							<option value="in-sale" <%= locals.product && product.category == 'in-sale' ? 'selected' : ''%>>
+								En oferta
+							</option>
+							<option value="visited" <%= locals.product && product.category == 'visited' ? 'selected' : ''%>>
+								Últimos agregados
+							</option>
+						</select>
+						<span class="alert-label">
+							<%= locals.errors && errors.category ? errors.category.msg : '' %>
+						</span>
+					</div>
+					<div class="col-12 col-md-6">
+						<label for="discount" class="form-label">Imágen/es:</label>
+						<input type="file" name="image" class="form-input" multiple>
+						<span class="alert-label"></span>
+					</div>
+					<div class="col-12">
+						<label for="description" class="form-label">Descripción:</label>
+						<textarea name="description" id="description" class="form-input"><%= locals.product && product.description ? product.description : "" %></textarea>
+					</div>
+					<div class="col-12">
+						<button type="submit" class="buy-now-button">Guardar producto</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+	</div>
+	<!-- /todos los productos -->
+
+	<!-- footer -->
+	<%- include('../partials/footer') %>
+	<!-- /footer -->
+</body>	
+</html>
