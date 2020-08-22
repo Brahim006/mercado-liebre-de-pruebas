@@ -1,6 +1,8 @@
 /**
  * Validador para el formulario de registro.
  */
+const dataModel = require("../utils/dataModel");
+const usersModel = dataModel("users");
 const { check, body } = require("express-validator");
 
 module.exports = [
@@ -15,12 +17,16 @@ module.exports = [
     check("userName")
         .notEmpty().withMessage("Debe ingresar un nombre de usuario").bail()
         .isLength({min : 8}).withMessage("Debe tener 8 caracteres como mínimo").bail()
-        .isAlphanumeric("es-ES").withMessage("Sólo se admiten números y símbolos del español"),
+        .custom(value => { // Comprueba que el nombre de usuario no esté en uso
+            return usersModel.getByField("userName", value) == null;
+        }).withMessage("El nombre de usuario ya está en uso"),
 
     check("email")
-        // TODO: Checkear que el mail no esté en uso!
         .notEmpty().withMessage("Debe ingresar un email de referencia").bail()
-        .isEmail().withMessage("Debe ingresar un email válido").bail(),
+        .isEmail().withMessage("Debe ingresar un email válido").bail()
+        .custom(value => { // Comprueba que el mail esté disponible
+            return usersModel.getByField("email", value) == null;
+        }).withMessage("Este email ya se encuentra registrado"),
     
     check("birth")
         // TODO: Encontrar una forma de comprobar si el usuario es mayor de edad...
@@ -35,12 +41,36 @@ module.exports = [
         // TODO: Validar que la contraseña tenga al menos una minúscula, una mayúscula y un número
         .notEmpty().withMessage("Debe ingresar una contraseña").bail()
         .isLength({min: 8, max : 12})
-            .withMessage("Debe contener como mínimmo 8 caracteres y como máximo 12").bail(),
+        .withMessage("Debe contener como mínimmo 8 caracteres y como máximo 12").bail()
+        .custom(value => {
+            // Condiciones
+            let hasUpper = false, hasLower = false, hasNumber = false;
+
+            // Todas las comprobaciones de caracteres se hacen sobre el código ASCII
+            // https://elcodigoascii.com.ar/
+            for(let i = 0; i < value.length; i++){
+                let code = value.charCodeAt(i); // Retorna el código ASCII del caracter
+
+                // Checkea minúsculas                                 ñ
+                if(!hasLower && (code >= 97 && code <= 122 || code == 164)) 
+                    hasLower = true;
+                // Checkea mayúsculas                                Ñ
+                if(!hasUpper && (code >= 65 && code <= 90 || code == 165)) 
+                    hasUpper = true;
+                // Checkea números
+                if(!hasNumber && parseInt(value.charAt(i)) != NaN) 
+                    hasNumber = true;
+            }
+
+            return hasUpper && hasLower && hasNumber;
+        }).withMessage("La contraseña debe contener por lo menos una mayúscula, una minúscula y un número")
+        ,
 
     check("confirmPassword")
         .notEmpty().withMessage("Debe reingresar su contraseña").bail()
         .custom(value => {
-            return value == body("password");
+            // Compara contraseñas
+            return body("password").matches(value);
         }).withMessage("Ambas contraseñas deben coincidir")
         
 ]
