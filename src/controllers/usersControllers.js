@@ -20,20 +20,20 @@ module.exports = {
     store: function(req, res){
         
         let errors = validationResult(req);
+
+        let user = req.body;
+
         if(errors.isEmpty()){
-
-            let user = req.body;
-            delete user.confirmPassword; // Borra la password duplicada
-
             // Hasheo la contraseña
             user.password = bcrypt.hashSync(user.password, HASH_SALT);
-
+            delete user.confirmPassword; // Borra la password duplicada
+            
             usersModel.store(user);
-
+            res.redirect("/");
         } else {
             res.render("users/register", {
                 errors : errors.mapped(),
-                user : req.body
+                user : user
             })
         }
 
