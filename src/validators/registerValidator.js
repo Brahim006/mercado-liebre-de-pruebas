@@ -69,8 +69,29 @@ module.exports = [
     check("confirmPassword")
         .notEmpty().withMessage("Debe reingresar su contraseña").bail()
         .custom(value => {
-            // Compara contraseñas
-            return body("password").matches(value);
-        }).withMessage("Ambas contraseñas deben coincidir")
+            // TODO: Ver como implementar la comparación de contraseñas
+            return body("password").equals(value);
+        }).withMessage("Ambas contraseñas deben coincidir"),
+
+    // Sanitizers
+    body("userProfile")
+        .toInt(), // Convierte a valor numérico
+
+    body("interests")
+        // Convierte ó intenta convertir a valor numérico el ID de intereses
+        .customSanitizer(value => {
+            if(Array.isArray(value)){
+                // Si es array, convierte en entero a cada selección
+                return value.map(element =>{
+                    return parseInt(element);
+                });
+            } else if(value) {
+                // Si no es array (ni nulo), parsea a entero y almacena en un array
+                return [parseInt(value)]
+            } else{
+                // Si no se ha seleccionado ningún interés, se retorna un array vacío
+                return [];
+            }
+        })
         
 ]
