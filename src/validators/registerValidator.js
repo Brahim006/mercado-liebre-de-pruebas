@@ -78,19 +78,14 @@ module.exports = [
         .toInt(), // Convierte a valor numérico
 
     body("interests")
+        .toArray() // Convierte el campo en array
         // Convierte ó intenta convertir a valor numérico el ID de intereses
         .customSanitizer(value => {
-            if(Array.isArray(value)){
-                // Si es array, convierte en entero a cada selección
+            if(value.length != 0){
+                // Si no está vacío, convierte en entero a cada selección
                 return value.map(element =>{
                     return parseInt(element);
                 });
-            } else if(value) {
-                // Si no es array (ni nulo), parsea a entero y almacena en un array
-                return [parseInt(value)]
-            } else{
-                // Si no se ha seleccionado ningún interés, se retorna un array vacío
-                return [];
             }
         })
         
