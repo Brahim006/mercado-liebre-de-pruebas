@@ -1,7 +1,7 @@
 /**
  * Validator para el formulario de creación/edición de productos,
  */
-const { check } = require("express-validator");
+const { check, body } = require("express-validator");
 
 module.exports = [
 
@@ -20,5 +20,11 @@ module.exports = [
         .withMessage("Sólo se admiten porcentajes (entre 0 y 100)"),
     
     check("category")
-        .notEmpty().withMessage("Debe seleccionar una categoría")
+        .notEmpty().withMessage("Debe seleccionar una categoría"),
+
+    // Sanitizadores
+    body("price")
+        .toFloat(),
+    body("discount")
+        .toInt(),
 ]
