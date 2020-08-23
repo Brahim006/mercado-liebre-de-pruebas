@@ -13,48 +13,91 @@
 
             <form action="/users/register" method="POST"> <!-- Formulario de registro -->
 
-                <input type="text" name="name" id="name" required 
-                    placeholder="Nombre(s)" class="textField">
-                <input type="text" name="lastName" id="lastName" required
-                    placeholder="Apellido(s)" class="textField">
-                <input type="text" name="userName" id="userName" required
-                       placeholder="Nombre de usuario" class="textField">
+                <input type="text" name="name" id="name" required placeholder="Nombre(s)" 
+                    class="textField <%= locals.errors && errors.name ? 'alert-input' : '' %>"
+                    value="<%= locals.user && user.name ? user.name : '' %>">
+                <span class="alert-label">
+                    <%= locals.errors && errors.name ? errors.name.msg : '' %>
+                </span>
+
+                <input type="text" name="lastName" id="lastName" required placeholder="Apellido(s)" 
+                    class="textField <%= locals.errors && errors.lastName ? 'alert-input' : '' %>"
+                    value="<%= locals.user && user.lastName ? user.lastName : '' %>">
+                <span class="alert-label">
+                    <%= locals.errors && errors.lastName ? errors.lastName.msg : '' %>
+                </span>
+
+                <input type="text" name="userName" id="userName" required placeholder="Nombre de usuario" 
+                    class="textField <%= locals.errors && errors.userName ? 'alert-input' : '' %>"
+                    value="<%= locals.user && user.userName ? user.userName : ''  %>">
+                <span class="alert-label">
+                    <%= locals.errors && errors.userName ? errors.userName.msg : '' %>
+                </span>
+
                 <input type="email" name="email" id="email" placeholder="E-mail" required
-                       class="textField">
-    
+                    class="textField <%= locals.errors && errors.email ? 'alert-input' : '' %>"
+                    value="<%= locals.user && user.email ? user.email : '' %>">
+                <span class="alert-label">
+                    <%= locals.errors && errors.email ? errors.email.msg : '' %>
+                </span>
+
                 <label for="birth">Fecha de nacimiento:</label>
-                <input type="date" name="birth" id="birth" class="textField" required>
+                <input type="date" name="birth" id="birth" class="textField" required
+                    class="<%= locals.errors && errors.birth ? 'alert-input' : '' %>"
+                    value="<%= locals.user && user.birth ? user.birth : '' %>">
+                <span class="alert-label">
+                    <%= locals.errors && errors.birth ? errors.birth.msg : '' %>
+                </span>
     
                 <input type="text" name="address" id="address" placeholder="Domicilio"
-                class="textField">
+                    class="textField <%= locals.errors && errors.address ? 'alert-input' : '' %>"
+                    value="<%= locals.user && user.address ? user.address : '' %>">
+                <span class="alert-label">
+                    <%= locals.errors && errors.address ? errors.address.msg : '' %>
+                </span>
     
                 <label for="userProfile" class="sectionLabel">Perfil de usuario</label>
                 <div class="radio-container">
-                    <input type="radio" name="userProfile" value="1" checked>
+                    <input type="radio" name="userProfile" value="1" 
+                    <%= !locals.user || (locals.user && user.userProfile) ? 'checked' : '' %>>
                     <span>Vendedor</span>
-                    <input type="radio" name="userProfile" value="2">
+                    <input type="radio" name="userProfile" value="2" 
+                    <%= locals.user && user.userProfile == 2 ? 'checked' : ''%>>
                     <span>Comprador</span>
                 </div>
 
                 <label for="interests" class="sectionLabel">Intereses</label>
                 <div class="checkbox-container">
-                    <input type="checkbox" name="interests" value="1">
+                    <input type="checkbox" name="interests" value="1"
+                    <%= locals.user && user.interests.includes(1) ? 'selected' : '' %>>
                     <span class="chackbox-label">Electro</span>
-                    <input type="checkbox" name="interests" value="2">
+                    <input type="checkbox" name="interests" value="2"
+                    <%= locals.user && user.interests.includes(2) ? 'selected' : '' %>>
                     <span class="chackbox-label">Moda</span>
-                    <input type="checkbox" name="interests" value="3">
+                    <input type="checkbox" name="interests" value="3"
+                    <%= locals.user && user.interests.includes(3) ? 'selected' : '' %>>
                     <span class="chackbox-label">Hogar</span>
-                    <input type="checkbox" name="interests" value="4">
+                    <input type="checkbox" name="interests" value="4"
+                    <%= locals.user && user.interests.includes(4) ? 'selected' : '' %>>
                     <span class="chackbox-label">Juguetería</span>
-                    <input type="checkbox" name="interests" value="5">
+                    <input type="checkbox" name="interests" value="5"
+                    <%= locals.user && user.interests.includes(5) ? 'selected' : '' %>>
                     <span class="chackbox-label">Vida sana</span>
                 </div>
     
-                <input type="password" name="password" id="password" placeholder="Contraseña"
-                       class="textField" required>
-                <input type="password" name="confirmPassword" id="confirmPassword" 
-                       placeholder="Confirmar contraseña" class="textField" required>
-    
+                <input type="password" name="password" id="password" placeholder="Contraseña" required
+                       class="textField <%= locals.errors && errors.password ? 'alert-input' : '' %>">
+                <span class="alert-label">
+                    <%= locals.errors && errors.password ? errors.password.msg : '' %>
+                </span>
+
+                <input type="password" name="confirmPassword" id="confirmPassword" required
+                       placeholder="Confirmar contraseña" 
+                       class="textField <%= locals.errors && errors.confirmPassword ? 'alert-input' : '' %>">
+                <span class="alert-label">
+                    <%= locals.errors && errors.confirmPassword ? errors.confirmPassword.msg : '' %>
+                </span>
+
                 <button type="submit" class="submitButton">Enviar</button>
                 <button type="reset" class="resetButton">Borrar</button>
     
