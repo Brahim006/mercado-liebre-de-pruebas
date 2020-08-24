@@ -39,28 +39,24 @@ const controller = {
 	store: (req, res) => {
 		// Array de errores
 		let errors = validationResult(req);
+		// Obtengo los nombres de todas las imágenes amacenadas en disco
+		let img = [];
+		req.files.forEach(image => {
+			img.push(image.filename);
+		});
 		
 		if(errors.isEmpty()){
-			
-			// Obtengo los nombres de todas las imágenes amacenadas en disco
-			let img = [];
-			req.files.forEach(image => {
-				img.push(image.filename);
-			});
-			
-			let product = {
-				"name" : req.body.name,
-				"price" : req.body.price,
-				"discount" : req.body.discount,
-				"category" : req.body.category,
-				"description" : req.body.description,
-				"images" : img
-			}
+
+			let product = req.body;
+			product.images = img;
 	
 			productsModel.store(product);
 	
 			res.redirect("/products");
 		} else {
+
+			// Borro las imágenes que se hayan subido
+			productsModel.deleteImages(img);
 
 			res.render("products/product-create-form", 
 			{ 
@@ -117,6 +113,10 @@ const controller = {
 	
 			res.redirect("/products/" + product.id);
 		} else {
+			// Borra las imágenes que se hayan subido
+			if(req.files){
+				productsModel.deleteImages(req.files);
+			}
 			res.render("products/product-edit-form",
 				{
 					errors : errors.mapped(),
