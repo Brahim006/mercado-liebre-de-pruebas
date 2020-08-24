@@ -4,12 +4,15 @@ const router = express.Router();
 const multer = require("multer");
 const productsDataValidator = require("../validators/productsValidator");
 const dataTrimmer = require("../middleWares/dataTrimmer");
-const diskStorage = require("../utils/diskStorage");
+const multerConfig = require("../config/multerConfig");
+
+// ************ Constants ************
+const ALLOWED_MIME_TYPES = ["image/jpg", "image/jpeg", "image/png", "image/gif"];
 
 // Middleware para trimmear la info de productos
 const productsDataTrimmer = dataTrimmer("name", "price", "discount", "description");
 // Middleware para la subida de archivos
-const upload = multer({ storage : diskStorage("products") });
+const upload = multer(multerConfig("products", ALLOWED_MIME_TYPES));
 
 // ************ Controller Require ************
 const productsController = require('../controllers/productsController');
