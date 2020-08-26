@@ -9,11 +9,12 @@ const loginDataTrimmer = dataTrimmer("name");
 
 // Validators
 const registerValidator = require("../validators/registerValidator");
+const loginValidator = require("../validators/loginValidator");
 
 router.get("/register", controller.register);
 router.post("/register", registerDataTrimmer, registerValidator, controller.store);
 
 router.get("/login", controller.login);
-router.post("/login", loginDataTrimmer, controller.processLogin);
+router.post("/login", loginDataTrimmer, loginValidator, controller.processLogin);
 
 module.exports = router;

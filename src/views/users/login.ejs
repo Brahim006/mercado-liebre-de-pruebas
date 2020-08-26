@@ -14,9 +14,17 @@
             <form action="/users/login" method="POST"> <!-- Formulario de ingreso -->
 
                 <input type="text" name="userName" id="userName" placeholder="Nombre de Usuario"
-                       class="textField">
+                       class="textField <%= locals.errors && errors.userName ? 'alert-input' : '' %>">
+                <span class="alert-label">
+                    <%= locals.errors && errors.userName ? errors.userName.msg : '' %> 
+                </span>
+                       
                 <input type="password" name="password" id="password" placeholder="Contraseña"
-                       class="textField">
+                       class="textField <%= locals.errors && errors.password ? 'alert-input' : '' %>">
+                    <span class="alert-label">
+                        <%= locals.errors && errors.password ? errors.password.msg : '' %> 
+                    </span>
+
                 <label for="rememberMe">Recordarme</label>
                 <input type="checkbox" name="rememberMe" value="rememberMe">
                 <button type="submit" class="submitButton">Ingresar</button>

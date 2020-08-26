@@ -40,7 +40,14 @@ module.exports = {
     },
 
     processLogin : function(req, res){
-        // TODO: logear usuarios
+        const errors = validationResult(req);
+
+        if(errors.isEmpty()){
+
+        } else {
+            res.render("users/login", {errors : errors.mapped()});
+        }
+
     }
 
 }
