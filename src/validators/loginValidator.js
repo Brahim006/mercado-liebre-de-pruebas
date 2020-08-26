@@ -1,7 +1,4 @@
 const { check } = require("express-validator");
-const bcrypt = require("bcrypt");
-const dataModel = require("../utils/dataModel");
-const usersModel = dataModel("users");
 
 module.exports = [
 
