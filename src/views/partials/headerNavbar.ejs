@@ -31,14 +31,21 @@
 				<li><a href="/products">Todos los productos</a></li>
 				<li><a href="#">Ofertas</a></li>
 				<li><a href="#">Tiendas Oficiales</a></li>
-				<li><a href="/products/create">Vender</a></li>
+				<% if(locals.authUser && authUser.userProfile == 1) { %>
+					<li><a href="/products/create">Vender</a></li>
+				<% } %>
 				<li><a href="#">Ayuda</a></li>
 			</ul>
 
 			<ul class="right-navbar">
-				<li><a href="/users/register">Creá tu cuenta <i class="far fa-address-card"></i></a></li>
-				<li><a href="/users/login">Ingresá <i class="fas fa-sign-in-alt"></i></a></li>
-				<li><a href="#">Mis compras <i class="fas fa-shopping-basket"></i></a></li>
+				<% if(!locals.authUser){ %>
+					<li><a href="/users/register">Creá tu cuenta <i class="far fa-address-card"></i></a></li>
+					<li><a href="/users/login">Ingresá <i class="fas fa-sign-in-alt"></i></a></li>
+				<% } else { %>
+					<%# El logout debería estar dentro de un form y mandarlo por POST %>
+					<li><a href="/users/logout">Logout<i class="fas fa-sign-in-alt"></i></a></li>
+					<li><a href="#">Mis compras <i class="fas fa-shopping-basket"></i></a></li>
+				<% } %>
 			</ul>
 		</nav>
 	</div>
