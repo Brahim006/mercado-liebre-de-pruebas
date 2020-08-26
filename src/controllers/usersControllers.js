@@ -39,7 +39,7 @@ module.exports = {
 
     },
 
-    processLogin : function(req, res){
+    athenticate : function(req, res){
         const errors = validationResult(req);
 
         if(errors.isEmpty()){
