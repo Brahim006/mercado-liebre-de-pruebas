@@ -5,7 +5,7 @@ const dataTrimmer = require("../middleWares/dataTrimmer");
 
 // Trimmers
 const registerDataTrimmer = dataTrimmer("name", "lastName", "userName", "email", "address");
-const loginDataTrimmer = dataTrimmer("name");
+const loginDataTrimmer = dataTrimmer("userName");
 
 // Validators
 const registerValidator = require("../validators/registerValidator");
