@@ -43,6 +43,17 @@ module.exports = {
         const errors = validationResult(req);
 
         if(errors.isEmpty()){
+            let user = usersModel.getByField("userName", req.body.userName);
+
+            // Si el usuario existe y la contraseña coincide
+            if(user && bcrypt.compareSync(req.body.password, user.password)){
+                return res.json(user);
+            } else {
+                // Creo un error y se lo envío a la vista
+                res.render("users/login", {
+                    errors : { athenticate : { msg : "Usuario ó contraseña incorrecta" } }
+                });
+            }
 
         } else {
             res.render("users/login", {errors : errors.mapped()});

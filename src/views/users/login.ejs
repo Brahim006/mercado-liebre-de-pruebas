@@ -27,6 +27,11 @@
 
                 <label for="rememberMe">Recordarme</label>
                 <input type="checkbox" name="rememberMe" value="rememberMe">
+
+                <span class="alert-label">
+                    <%= locals.errors && errors.athenticate ? errors.athenticate.msg : '' %> 
+                </span>
+
                 <button type="submit" class="submitButton">Ingresar</button>
     
             </form>
