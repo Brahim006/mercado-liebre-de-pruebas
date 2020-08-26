@@ -17,4 +17,6 @@ router.post("/register", registerDataTrimmer, registerValidator, controller.stor
 router.get("/login", controller.login);
 router.post("/login", loginDataTrimmer, loginValidator, controller.athenticate);
 
+router.get("/logout", controller.logout);
+
 module.exports = router;
