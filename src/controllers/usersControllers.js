@@ -29,6 +29,12 @@ module.exports = {
             delete user.confirmPassword; // Borra la password duplicada
             
             usersModel.store(user);
+
+            // Borro la password del usuario para evitar mandársela a la sesión
+            delete user.password;
+            // Almaceno el usuario en la sesión, para que aparezca logeado
+            req.session.user = user;
+
             res.redirect("/");
         } else {
             res.render("users/register", {
@@ -47,7 +53,14 @@ module.exports = {
 
             // Si el usuario existe y la contraseña coincide
             if(user && bcrypt.compareSync(req.body.password, user.password)){
-                return res.json(user);
+                
+                // Borro la password del usuario para evitar mandársela a la sesión
+                delete user.password;
+                // Almaceno el usuario en la sesión
+                req.session.user = user;
+
+                res.redirect("/");
+
             } else {
                 // Creo un error y se lo envío a la vista
                 res.render("users/login", {
@@ -59,6 +72,11 @@ module.exports = {
             res.render("users/login", {errors : errors.mapped()});
         }
 
+    },
+
+    logout: function(req, res){
+        req.session.destroy();
+        res.redirect("/");
     }
 
 }
