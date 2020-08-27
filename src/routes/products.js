@@ -5,6 +5,8 @@ const multer = require("multer");
 const productsDataValidator = require("../validators/productsValidator");
 const dataTrimmer = require("../middleWares/dataTrimmer");
 const multerConfig = require("../config/multerConfig");
+const userRoute = require("../middleWares/userRoute");
+const sellerRoute = require("../middleWares/sellerRoute");
 
 // ************ Constants ************
 const ALLOWED_MIME_TYPES = ["image/jpg", "image/jpeg", "image/png", "image/gif"];
@@ -21,7 +23,7 @@ const productsController = require('../controllers/productsController');
 router.get('/', productsController.index); 
 
 /*** CREATE ONE PRODUCT ***/ 
-router.get('/create', productsController.create);
+router.get('/create', userRoute,sellerRoute, productsController.create);
 
 router.post('/create',
             upload.any(),
@@ -33,7 +35,7 @@ router.post('/create',
 router.get('/:id', productsController.detail);
 
 /*** EDIT ONE PRODUCT ***/ 
-router.get('/:id/edit', productsController.edit);
+router.get('/:id/edit', userRoute, sellerRoute ,productsController.edit);
 
 router.put('/:id/edit', 
             upload.any(),
