@@ -91,15 +91,17 @@ module.exports = {
     },
 
     logout: function(req, res){
+        // Borro todos los tokens de ese usuario en BD
+        let tokens = usersTokensModel.getAllByField("userID", req.session.user.id);
+        
+        tokens.forEach(token => {
+            usersTokensModel.delete(token.id);
+        });
+
         // Destruyo la sesión
         req.session.destroy();
-
-        // Limpio la cookie y la borro de BD
-        let token = usersTokensModel.getByField("token", req.cookies.userToken);
-        usersTokensModel.delete(token.id);
+        // Limpio la cookie
         res.clearCookie("userToken");
-
-        // TODO: Borrar todos los tokens relacionados a ese usuario
 
         res.redirect("/");
     }
