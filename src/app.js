@@ -17,6 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(methodOverride('_method')); // Para poder pisar el method="POST" en el formulario por PUT y DELETE
+// **************** Middlewares de autenticación ****************
 app.use(session(
   {
     secret : "Mercado Liebre",
@@ -24,8 +25,7 @@ app.use(session(
     saveUninitialized: true // Guarda sesiones aunque todavía no hayan datos
   }));
 app.use(cookieParser());
-
-app.use(authMiddleware)
+app.use(authMiddleware);
 
 // ************ Template Engine - (don't touch) ************
 app.set('view engine', 'ejs');
