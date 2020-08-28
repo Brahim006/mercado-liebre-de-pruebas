@@ -48,4 +48,5 @@ Thumbs.db
 /public/images/products/
 /src/data/products.json
 /src/data/users.json
+/src/data/tokens.json
 /src/test
