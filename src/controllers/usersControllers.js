@@ -2,8 +2,10 @@ const fs = require("fs");
 const path = require("path");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 const dataModel = require("../utils/dataModel");
 const usersModel = dataModel("users");
+const usersTokensModel = dataModel("tokens");
 
 const HASH_SALT = 10;
 
@@ -59,6 +61,20 @@ module.exports = {
                 // Almaceno el usuario en la sesión
                 req.session.user = user;
 
+                // VIDEO DE LANDO min 36:41
+
+                // En caso de que el usuario haya marcado "recordarme", le envío una cookie
+                if(req.body.remember){
+                    // Genero un token seguro, aleatorio para la cookie del usuario
+                    const token = crypto.randomBytes(48).toString("base64");
+
+                    // Creo el token en la "BD" de toquens
+                    usersTokensModel.store({userID : user.id, token : token});
+
+                    // Almacena el Token en la cookie
+                    res.cookie("userToken", token, {maxAge : 1000 * 60 * 60 * 24 * 30});
+                }
+
                 res.redirect("/");
 
             } else {
@@ -75,7 +91,16 @@ module.exports = {
     },
 
     logout: function(req, res){
+        // Destruyo la sesión
         req.session.destroy();
+
+        // Limpio la cookie y la borro de BD
+        let token = usersTokensModel.getByField("token", req.cookies.userToken);
+        usersTokensModel.delete(token.id);
+        res.clearCookie("userToken");
+
+        // TODO: Borrar todos los tokens relacionados a ese usuario
+
         res.redirect("/");
     }
 
