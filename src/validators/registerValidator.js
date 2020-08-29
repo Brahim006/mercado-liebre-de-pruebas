@@ -16,7 +16,7 @@ module.exports = [
 
     check("userName")
         .notEmpty().withMessage("Debe ingresar un nombre de usuario").bail()
-        .isLength({min : 8}).withMessage("Debe tener 8 caracteres como mínimo").bail()
+        .isLength({min : 8, max: 20}).withMessage("Debe tener 8 caracteres como mínimo y 20 como máximo").bail()
         .custom(value => { // Comprueba que el nombre de usuario no esté en uso
             return usersModel.getByField("userName", value) == null;
         }).withMessage("El nombre de usuario ya está en uso"),
