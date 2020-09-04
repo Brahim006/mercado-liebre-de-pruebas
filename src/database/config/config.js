@@ -4,7 +4,11 @@ module.exports = {
     "password": null,
     "database": "mercado_liebre",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "define": {
+        "timestamps": false,
+        "underscored": true
+      }
   },
   "test": {
     "username": "root",
