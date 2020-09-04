@@ -3,12 +3,12 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class User extends Model {
         /**
-         * Helper method for defining associations.
-         * This method is not a part of Sequelize lifecycle.
-         * The `models/index` file will call this method automatically.
+         * Asociación a la tabla "profiles", con la cual tiene una relación N:1
+         * y a la tabla "tokens" con la cual tiene una relación 1:N
          */
         static associate(models) {
-            // define association here
+            this.belongsTo(models.profile);
+            this.hasMany(models.token);
         }
     };
     User.init({

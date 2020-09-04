@@ -3,12 +3,10 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class image extends Model {
         /**
-         * Helper method for defining associations.
-         * This method is not a part of Sequelize lifecycle.
-         * The `models/index` file will call this method automatically.
+         * Asociación a la tabla "products", con la cual tiene una relación N:1
          */
         static associate(models) {
-            // define association here
+            this.belongsTo(models.product);
         }
     };
     image.init({
@@ -19,8 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, {
         sequelize,
-        modelName: 'image',
-        timestamps: false
+        modelName: 'image'
     });
     return image;
 };
